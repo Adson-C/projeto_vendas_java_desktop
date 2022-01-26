@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 
-public class ClientesDAO {
+public class ClientesDAO extends Clientes{
     
     private Connection conn;
     
@@ -52,11 +52,62 @@ public class ClientesDAO {
         }
     }
     
-    public void alterarCleinte() {
+    public void alterarCleinte(Clientes obj) {
+        
+        try {
+            // sql de para salvar novo cliente
+            String sql = "update tb_clientes set nome=?, rg=?, cpf=?, email=?, telefone=?, celular=?, "
+                           + "cep=?, endereco=?, numero=?, complemento=?, bairro=?, cidade=?, estado=? where id =?";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+           ps.setString(1, obj.getNome());
+            ps.setString(2, obj.getRg());
+            ps.setString(3, obj.getCpf());
+            ps.setString(4, obj.getEmail());
+            ps.setString(5, obj.getTelefone());
+            ps.setString(6, obj.getCelular());
+            ps.setString(7, obj.getCep());
+            ps.setString(8, obj.getEndereco());
+            ps.setInt(9, obj.getNumero());
+            ps.setString(10, obj.getComplemento());
+            ps.setString(11, obj.getBairro());
+            ps.setString(12, obj.getCidade());
+            ps.setString(13, obj.getUf());
+            
+            ps.setInt(14, obj.getId());
+            
+            ps.execute();
+            ps.close();
+            
+            JOptionPane.showMessageDialog(null, "Cliente Alterado com Sucesso!");
+            
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro" + erro);
+            
+        }
         
     }
       
-     public void excluirCleinte() {
+     public void excluirCleinte(Clientes obj) {
+       
+                try {
+            // sql de para salvar novo cliente
+            String sql = "delete from tb_clientes where id = ?";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            ps.setInt(1, obj.getId());
+            
+            ps.execute();
+            ps.close();
+            
+         //JOptionPane.showMessageDialog(null, "Cliente Excluido com Sucesso! ");
+            
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro" + erro);
+            
+        }
+    
         
     }
      
