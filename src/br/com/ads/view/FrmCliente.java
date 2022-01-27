@@ -2,6 +2,7 @@ package br.com.ads.view;
 
 import br.com.ads.dao.ClientesDAO;
 import br.com.ads.model.Clientes;
+import br.com.ads.utils.LimparCamposUltis;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -79,9 +80,10 @@ public class FrmCliente extends javax.swing.JFrame {
         txtRG = new javax.swing.JFormattedTextField();
         jLabel15 = new javax.swing.JLabel();
         txtCpf = new javax.swing.JFormattedTextField();
+        btnBuscar = new javax.swing.JButton();
         painelPesquisa = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        txtNomePequisar = new javax.swing.JTextField();
+        txtPesquiNome = new javax.swing.JTextField();
         btnPesquisarNome = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaClientes = new javax.swing.JTable();
@@ -120,13 +122,16 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
-        tabbeDados.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabbeDados.setBackground(new java.awt.Color(131, 204, 204));
+        tabbeDados.setForeground(new java.awt.Color(59, 132, 105));
+        tabbeDados.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         painelDados.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Código:");
 
+        txtCodigo.setEditable(false);
         txtCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,6 +265,14 @@ public class FrmCliente extends javax.swing.JFrame {
         }
         txtCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnBuscar.setText("Pequisar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
         painelDadosLayout.setHorizontalGroup(
@@ -327,7 +340,10 @@ public class FrmCliente extends javax.swing.JFrame {
                                     .addComponent(jLabel6)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(txtTel, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(painelDadosLayout.createSequentialGroup()
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -343,8 +359,9 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addGap(25, 25, 25)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -387,15 +404,25 @@ public class FrmCliente extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel16.setText("Nome:");
 
-        txtNomePequisar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtNomePequisar.addActionListener(new java.awt.event.ActionListener() {
+        txtPesquiNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPesquiNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomePequisarActionPerformed(evt);
+                txtPesquiNomeActionPerformed(evt);
+            }
+        });
+        txtPesquiNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPesquiNomeKeyPressed(evt);
             }
         });
 
         btnPesquisarNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnPesquisarNome.setText("Pesquisar");
+        btnPesquisarNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarNomeActionPerformed(evt);
+            }
+        });
 
         tabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -423,7 +450,7 @@ public class FrmCliente extends javax.swing.JFrame {
                     .addGroup(painelPesquisaLayout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNomePequisar, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPesquiNome, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnPesquisarNome)
                         .addContainerGap(508, Short.MAX_VALUE))))
@@ -435,7 +462,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addGroup(painelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel16)
                     .addGroup(painelPesquisaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtNomePequisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPesquiNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnPesquisarNome)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -454,6 +481,11 @@ public class FrmCliente extends javax.swing.JFrame {
 
         btnNovo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnNovo.setText("+ NOVO");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnExcluir.setText("EXCLUIR");
@@ -543,9 +575,9 @@ public class FrmCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtComplementoActionPerformed
 
-    private void txtNomePequisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomePequisarActionPerformed
+    private void txtPesquiNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquiNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomePequisarActionPerformed
+    }//GEN-LAST:event_txtPesquiNomeActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
@@ -569,6 +601,7 @@ public class FrmCliente extends javax.swing.JFrame {
             
             
             dao.cadastrarCleinte(obj);
+            new LimparCamposUltis().LimpaTela(painelDados);
                    
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -622,6 +655,8 @@ public class FrmCliente extends javax.swing.JFrame {
             
             
             dao.alterarCleinte(obj);
+            
+            new LimparCamposUltis().LimpaTela(painelDados);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -647,7 +682,113 @@ public class FrmCliente extends javax.swing.JFrame {
             
             
             dao.excluirCleinte(obj);
+            
+            new LimparCamposUltis().LimpaTela(painelDados);
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnPesquisarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarNomeActionPerformed
+        // Pesquisar por nome
+        
+        String nome = "%" + txtPesquiNome.getText() + "%";
+        
+        
+         ClientesDAO dao = new ClientesDAO();
+        List<Clientes> lista = dao.buscaClientePorNome(nome);
+        
+        DefaultTableModel dados = (DefaultTableModel) tabelaClientes.getModel();
+        dados.setNumRows(0);
+        
+        for (Clientes c : lista) {
+            dados.addRow(new Object[]{
+            c.getId(),
+            c.getNome(),
+            c.getRg(),
+            c.getCpf(),
+            c.getEmail(),
+            c.getTelefone(),
+            c.getCelular(),
+            c.getCep(),
+            c.getEndereco(),
+            c.getNumero(),
+            c.getComplemento(),
+            c.getBairro(),
+            c.getCidade(),
+            c.getUf()
+            });
+        }
+        
+    }//GEN-LAST:event_btnPesquisarNomeActionPerformed
+
+    private void txtPesquiNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquiNomeKeyPressed
+        
+         String nome = "%" + txtPesquiNome.getText() + "%";
+        
+        
+         ClientesDAO dao = new ClientesDAO();
+        List<Clientes> lista = dao.buscaClientePorNome(nome);
+        
+        DefaultTableModel dados = (DefaultTableModel) tabelaClientes.getModel();
+        dados.setNumRows(0);
+        
+        for (Clientes c : lista) {
+            dados.addRow(new Object[]{
+            c.getId(),
+            c.getNome(),
+            c.getRg(),
+            c.getCpf(),
+            c.getEmail(),
+            c.getTelefone(),
+            c.getCelular(),
+            c.getCep(),
+            c.getEndereco(),
+            c.getNumero(),
+            c.getComplemento(),
+            c.getBairro(),
+            c.getCidade(),
+            c.getUf()
+            });
+        }
+        
+    }//GEN-LAST:event_txtPesquiNomeKeyPressed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // Novo
+        
+        new LimparCamposUltis().LimpaTela(painelDados);
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // buscar por Nome
+
+            String nome = txtNome.getText();
+            Clientes obj = new Clientes();
+            ClientesDAO dao = new ClientesDAO();
+            
+            obj = dao.consultarPorNome(nome);
+     
+        if (obj.getNome() != null) {
+
+            //Exibir Dados
+            txtCodigo.setText(String.valueOf(obj.getId()));
+            txtNome.setText(obj.getNome());
+            txtRG.setText(obj.getRg());
+            txtCpf.setText(obj.getCpf());
+            txtEmail.setText(obj.getEmail());
+            txtTel.setText(obj.getTelefone());
+            txtCel.setText(obj.getCelular());
+            txtCep.setText(obj.getCep());
+            txtEndereco.setText(obj.getEndereco());
+            txtNumero.setText(String.valueOf(obj.getNumero()));
+            txtComplemento.setText(obj.getComplemento());
+            txtBairro.setText(obj.getBairro());
+            txtCidade.setText(obj.getCidade());
+            cbUf.setSelectedItem(obj.getUf());
+        } else {
+            JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
+        }
+
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -685,6 +826,7 @@ public class FrmCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
@@ -723,8 +865,8 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtNomePequisar;
     private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtPesquiNome;
     private javax.swing.JFormattedTextField txtRG;
     private javax.swing.JFormattedTextField txtTel;
     // End of variables declaration//GEN-END:variables
