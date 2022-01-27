@@ -3,6 +3,7 @@ package br.com.ads.view;
 import br.com.ads.dao.ClientesDAO;
 import br.com.ads.model.Clientes;
 import br.com.ads.utils.LimparCamposUltis;
+import com.sun.glass.events.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -185,6 +186,11 @@ public class FrmCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtCep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCepKeyPressed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("CEP:");
@@ -243,7 +249,7 @@ public class FrmCliente extends javax.swing.JFrame {
         jLabel13.setText("UF:");
 
         cbUf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RJ", "SP\t", "PR" }));
+        cbUf.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("RG:");
@@ -789,6 +795,21 @@ public class FrmCliente extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCepKeyPressed
+        // mostra cep 
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Clientes obj = new Clientes();
+            ClientesDAO dao = new ClientesDAO();
+            obj = dao.buscarCep(txtCep.getText());
+            
+            txtEndereco.setText(obj.getEndereco());
+            txtBairro.setText(obj.getBairro());
+            txtCidade.setText(obj.getCidade());
+            cbUf.setSelectedItem(obj.getUf());
+            
+        }
+    }//GEN-LAST:event_txtCepKeyPressed
 
     /**
      * @param args the command line arguments
