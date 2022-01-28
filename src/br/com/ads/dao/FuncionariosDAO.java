@@ -56,6 +56,71 @@ public class FuncionariosDAO {
         }
     }
      
+      public void alterarFuncionario(Funcionarios obj) {
+        
+        try {
+            // sql de para salvar novo cliente
+            String sql = "update tb_funcionarios set nome=?, rg=?, cpf=?, email=?, senha=?, cargo=?, nivel_acesso=?, telefone=?, celular=?, "
+                           + "cep=?, endereco=?, numero=?, complemento=?, bairro=?, cidade=?, estado=? where id =?";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+           ps.setString(1, obj.getNome());
+            ps.setString(2, obj.getRg());
+            ps.setString(3, obj.getCpf());
+            ps.setString(4, obj.getEmail());
+            ps.setString(5, obj.getSenha());
+            ps.setString(6, obj.getCargo());
+            ps.setString(7, obj.getNivelAcesso());
+            ps.setString(8, obj.getTelefone());
+            ps.setString(9, obj.getCelular());
+            ps.setString(10, obj.getCep());
+            ps.setString(11, obj.getEndereco());
+            ps.setInt(12, obj.getNumero());
+            ps.setString(13, obj.getComplemento());
+            ps.setString(14, obj.getBairro());
+            ps.setString(15, obj.getCidade());
+            ps.setString(16, obj.getUf());
+            
+            ps.setInt(17, obj.getId());
+            
+            ps.execute();
+            ps.close();
+            
+            JOptionPane.showMessageDialog(null, "Funcionário Alterado com Sucesso!");
+            
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro" + erro);
+            
+        }
+        
+    }
+   
+     
+     
+     public void excluirFuncionario(Funcionarios obj) {
+       
+                try {
+            // sql de para salvar novo cliente
+            String sql = "delete from tb_funcionarios where id = ?";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            ps.setInt(1, obj.getId());
+            
+            ps.execute();
+            ps.close();
+            
+         //JOptionPane.showMessageDialog(null, "Cliente Excluido com Sucesso! ");
+            
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro" + erro);
+            
+        }
+    
+        
+    }
+     
+     
      public  List<Funcionarios>listarFuncionarios() {
          
          try {
