@@ -2,6 +2,7 @@ package br.com.ads.dao;
 
 import br.com.ads.jdbc.ConnectionFactory;
 import br.com.ads.model.Funcionarios;
+import br.com.ads.view.frmMenu;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -249,6 +250,32 @@ public class FuncionariosDAO {
             JOptionPane.showMessageDialog(null, "Funcionários não encontrado!");
             return null;
         }
+    }
+    
+    public void efetuarlogar(String email, String senha) {
+        try {
+            
+            String sql = "select * from tb_funcionarios where email=? and senha=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, senha);
+            
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs.next()) {
+               JOptionPane.showMessageDialog(null, "Seja bem vindo ao Sistema!");
+                frmMenu tela = new frmMenu();
+                tela.setVisible(true);
+                
+            }else {
+               JOptionPane.showMessageDialog(null, "Dados incorretos!");
+            }
+            
+        } catch (SQLException e) {
+            
+            JOptionPane.showMessageDialog(null, "Error: " + e );
+        }
+        
     }
 
 }

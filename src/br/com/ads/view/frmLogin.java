@@ -5,6 +5,9 @@
  */
 package br.com.ads.view;
 
+import br.com.ads.dao.FuncionariosDAO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author adson
@@ -37,7 +40,7 @@ public class frmLogin extends javax.swing.JFrame {
         btnEntrar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Seja BenVindo Ao Sistema de Autenticação");
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 102));
@@ -88,6 +91,11 @@ public class frmLogin extends javax.swing.JFrame {
 
         btnEntrar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnEntrar.setText("Entrar");
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
 
         btnSair.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnSair.setText("Sair");
@@ -158,6 +166,24 @@ public class frmLogin extends javax.swing.JFrame {
     private void txtSenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSenActionPerformed
+
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        // botao entrar
+        try {
+
+            String email, senha;
+            email = txtEma.getText();
+            senha = txtSen.getText();
+            
+            FuncionariosDAO dao = new FuncionariosDAO();
+            
+            dao.efetuarlogar(email, senha);
+            this.dispose();
+
+        } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error: " + e );
+        }
+    }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
      * @param args the command line arguments
