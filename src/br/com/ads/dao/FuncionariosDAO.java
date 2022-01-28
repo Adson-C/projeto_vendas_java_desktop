@@ -2,6 +2,7 @@ package br.com.ads.dao;
 
 import br.com.ads.jdbc.ConnectionFactory;
 import br.com.ads.model.Funcionarios;
+import br.com.ads.view.frmLogin;
 import br.com.ads.view.frmMenu;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -270,6 +271,7 @@ public class FuncionariosDAO {
                 
             }else {
                JOptionPane.showMessageDialog(null, "Dados incorretos!");
+               new frmLogin().setVisible(true);
             }
             
         } catch (SQLException e) {
