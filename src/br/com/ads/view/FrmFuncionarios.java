@@ -1,6 +1,8 @@
 package br.com.ads.view;
 
+import br.com.ads.dao.FuncionariosDAO;
 import br.com.ads.dao.ClientesDAO;
+import br.com.ads.model.Funcionarios;
 import br.com.ads.model.Clientes;
 import br.com.ads.utils.LimparCamposUltis;
 import com.sun.glass.events.KeyEvent;
@@ -648,12 +650,17 @@ public class FrmFuncionarios extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-            Clientes obj = new Clientes();
+        // Salvar
+        
+            Funcionarios obj = new Funcionarios();
             
             obj.setNome(txtNome.getText());
             obj.setRg(txtRG.getText());
             obj.setCpf(txtCpf.getText());
             obj.setEmail(txtEmail.getText());
+            obj.setSenha(txtSenha.getText());
+            obj.setCargo(txtCargo.getText());
+            obj.setNivelAcesso(cbNivel.getSelectedItem().toString());
             obj.setTelefone(txtTel.getText());
             obj.setCelular(txtCel.getText());
             obj.setCep(txtCep.getText());
@@ -664,10 +671,10 @@ public class FrmFuncionarios extends javax.swing.JFrame {
             obj.setCidade(txtCidade.getText());
             obj.setUf(cbUf.getSelectedItem().toString());
             
-            ClientesDAO dao = new ClientesDAO();
+            FuncionariosDAO dao = new FuncionariosDAO();
             
             
-            dao.cadastrarCleinte(obj);
+            dao.cadastrarFuncionarios(obj);
             new LimparCamposUltis().LimpaTela(painelDados);
                    
     }//GEN-LAST:event_btnSalvarActionPerformed
