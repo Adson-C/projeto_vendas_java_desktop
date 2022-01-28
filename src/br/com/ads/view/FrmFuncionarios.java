@@ -158,6 +158,11 @@ public class FrmFuncionarios extends javax.swing.JFrame {
                 txtNomeActionPerformed(evt);
             }
         });
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNomeKeyPressed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("E-mail:");
@@ -618,7 +623,7 @@ public class FrmFuncionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCodigoActionPerformed
 
     private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
-        // TODO add your handling code here:
+        // 
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
@@ -800,19 +805,23 @@ public class FrmFuncionarios extends javax.swing.JFrame {
 
         String nome = "%" + txtPesquiNome.getText() + "%";
 
-        ClientesDAO dao = new ClientesDAO();
-        List<Clientes> lista = dao.buscaClientePorNome(nome);
+        FuncionariosDAO dao = new FuncionariosDAO()
+                ;
+        List<Funcionarios> lista = dao.listaFuncionarioPorNome(nome);
 
         DefaultTableModel dados = (DefaultTableModel) tabelaFuncionarios.getModel();
         dados.setNumRows(0);
 
-        for (Clientes c : lista) {
+        for (Funcionarios c : lista) {
             dados.addRow(new Object[]{
                 c.getId(),
                 c.getNome(),
                 c.getRg(),
                 c.getCpf(),
                 c.getEmail(),
+                c.getSenha(),
+                c.getCargo(),
+                c.getNivelAcesso(),
                 c.getTelefone(),
                 c.getCelular(),
                 c.getCep(),
@@ -837,8 +846,8 @@ public class FrmFuncionarios extends javax.swing.JFrame {
         // buscar por Nome
 
         String nome = txtNome.getText();
-        Clientes obj = new Clientes();
-        ClientesDAO dao = new ClientesDAO();
+        Funcionarios obj = new Funcionarios();
+        FuncionariosDAO dao = new FuncionariosDAO();
 
         obj = dao.consultarPorNome(nome);
 
@@ -850,6 +859,9 @@ public class FrmFuncionarios extends javax.swing.JFrame {
             txtRG.setText(obj.getRg());
             txtCpf.setText(obj.getCpf());
             txtEmail.setText(obj.getEmail());
+            txtSenha.setText(obj.getSenha());
+            txtCargo.setText(obj.getCargo());
+            cbNivel.setSelectedItem(obj.getNivelAcesso());
             txtTel.setText(obj.getTelefone());
             txtCel.setText(obj.getCelular());
             txtCep.setText(obj.getCep());
@@ -860,7 +872,7 @@ public class FrmFuncionarios extends javax.swing.JFrame {
             txtCidade.setText(obj.getCidade());
             cbUf.setSelectedItem(obj.getUf());
         } else {
-            JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
+            JOptionPane.showMessageDialog(null, "Funcionário não encontrado!");
         }
 
 
@@ -888,6 +900,37 @@ public class FrmFuncionarios extends javax.swing.JFrame {
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSenhaActionPerformed
+
+    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
+        // 
+        
+        String nome = "%" + txtPesquiNome.getText() + "%";
+
+        ClientesDAO dao = new ClientesDAO();
+        List<Clientes> lista = dao.buscaClientePorNome(nome);
+
+        DefaultTableModel dados = (DefaultTableModel) tabelaFuncionarios.getModel();
+        dados.setNumRows(0);
+
+        for (Clientes c : lista) {
+            dados.addRow(new Object[]{
+                c.getId(),
+                c.getNome(),
+                c.getRg(),
+                c.getCpf(),
+                c.getEmail(),
+                c.getTelefone(),
+                c.getCelular(),
+                c.getCep(),
+                c.getEndereco(),
+                c.getNumero(),
+                c.getComplemento(),
+                c.getBairro(),
+                c.getCidade(),
+                c.getUf()
+            });
+        }
+    }//GEN-LAST:event_txtNomeKeyPressed
 
     /**
      * @param args the command line arguments
