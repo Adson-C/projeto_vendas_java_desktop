@@ -1,7 +1,9 @@
 package br.com.ads.view;
 
 import br.com.ads.dao.ClientesDAO;
+import br.com.ads.dao.FornecedoresDAO;
 import br.com.ads.model.Clientes;
+import br.com.ads.model.Fornecedores;
 import br.com.ads.utils.LimparCamposUltis;
 import com.sun.glass.events.KeyEvent;
 import java.util.List;
@@ -61,7 +63,7 @@ public class FrmProdutos extends javax.swing.JFrame {
         txtEstoque = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        cbFornecedor = new javax.swing.JComboBox<>();
+        cbFornecedor = new javax.swing.JComboBox();
         btnBuscar = new javax.swing.JButton();
         txtPreco = new javax.swing.JTextField();
         painelPesquisa = new javax.swing.JPanel();
@@ -150,7 +152,20 @@ public class FrmProdutos extends javax.swing.JFrame {
         jLabel13.setText("Fornecedor:");
 
         cbFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbFornecedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
+        cbFornecedor.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                cbFornecedorAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        cbFornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbFornecedorActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnBuscar.setText("Pequisar");
@@ -180,7 +195,6 @@ public class FrmProdutos extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,7 +205,8 @@ public class FrmProdutos extends javax.swing.JFrame {
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(133, Short.MAX_VALUE))
         );
         painelDadosLayout.setVerticalGroup(
@@ -594,6 +609,27 @@ public class FrmProdutos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPesquiNomeActionPerformed
 
+    private void cbFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFornecedorActionPerformed
+        
+        
+        
+        
+    }//GEN-LAST:event_cbFornecedorActionPerformed
+
+    private void cbFornecedorAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbFornecedorAncestorAdded
+        // Listar os Combox
+        
+        FornecedoresDAO dao = new FornecedoresDAO();
+        List<Fornecedores> listadeFornecedores = dao.listarFornecedores();
+        
+        cbFornecedor.removeAll();
+        
+        for(Fornecedores f : listadeFornecedores) {
+            cbFornecedor.addItem(f);
+        }
+        
+    }//GEN-LAST:event_cbFornecedorAncestorAdded
+
     /**
      * @param args the command line arguments
      */
@@ -643,7 +679,7 @@ public class FrmProdutos extends javax.swing.JFrame {
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnPesquisarNome;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JComboBox<String> cbFornecedor;
+    private javax.swing.JComboBox cbFornecedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel16;
