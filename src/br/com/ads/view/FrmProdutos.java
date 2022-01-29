@@ -2,8 +2,10 @@ package br.com.ads.view;
 
 import br.com.ads.dao.ClientesDAO;
 import br.com.ads.dao.FornecedoresDAO;
+import br.com.ads.dao.ProdutosDAO;
 import br.com.ads.model.Clientes;
 import br.com.ads.model.Fornecedores;
+import br.com.ads.model.Produtos;
 import br.com.ads.utils.LimparCamposUltis;
 import com.sun.glass.events.KeyEvent;
 import java.util.List;
@@ -383,27 +385,23 @@ public class FrmProdutos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
-            Clientes obj = new Clientes();
+        // Salvar
+        
+            Produtos obj = new Produtos();
             
-            obj.setNome(txtDescricao.getText());
-            obj.setRg(txtRG.getText());
-            obj.setCpf(txtCpf.getText());
-            obj.setEmail(txtEstoque.getText());
-            obj.setTelefone(txtTel.getText());
-            obj.setCelular(txtCel.getText());
-            obj.setCep(txtCep.getText());
-            obj.setEndereco(txtEndereco.getText()); 
-            obj.setNumero(Integer.parseInt(txtNumero.getText()));
-            obj.setComplemento(txtComplemento.getText());
-            obj.setBairro(txtBairro.getText());
-            obj.setCidade(txtCidade.getText());
-            obj.setUf(cbFornecedor.getSelectedItem().toString());
+            obj.setDescricao(txtDescricao.getText());
+            obj.setPreco(Double.parseDouble(txtPreco.getText()));
+            obj.setQtd_Estoque(Integer.parseInt(txtEstoque.getText()));
             
-            ClientesDAO dao = new ClientesDAO();
+            // Criar um Obejto de fornecedor
+            Fornecedores f = new Fornecedores();
+            f = (Fornecedores)cbFornecedor.getSelectedItem();
             
+            obj.setFornecedores(f); // objto de Produtos
             
-            dao.cadastrarCleinte(obj);
+            ProdutosDAO dao = new ProdutosDAO();
+            
+            dao.cadastrarProdutos(obj);
             new LimparCamposUltis().LimpaTela(painelDados);
                    
     }//GEN-LAST:event_btnSalvarActionPerformed
