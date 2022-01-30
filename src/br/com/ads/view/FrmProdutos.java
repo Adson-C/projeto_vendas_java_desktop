@@ -7,7 +7,6 @@ import br.com.ads.model.Clientes;
 import br.com.ads.model.Fornecedores;
 import br.com.ads.model.Produtos;
 import br.com.ads.utils.LimparCamposUltis;
-import com.sun.glass.events.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,28 +16,20 @@ public class FrmProdutos extends javax.swing.JFrame {
     
     public void listarTabela() {
         
-        ClientesDAO dao = new ClientesDAO();
-        List<Clientes> lista = dao.listarClientes();
+        ProdutosDAO dao = new ProdutosDAO();
+        List<Produtos> lista = dao.listarProdutos();
         
         DefaultTableModel dados = (DefaultTableModel) tabelaProdutos.getModel();
         dados.setNumRows(0);
         
-        for (Clientes c : lista) {
+        for (Produtos c : lista) {
             dados.addRow(new Object[]{
             c.getId(),
-            c.getNome(),
-            c.getRg(),
-            c.getCpf(),
-            c.getEmail(),
-            c.getTelefone(),
-            c.getCelular(),
-            c.getCep(),
-            c.getEndereco(),
-            c.getNumero(),
-            c.getComplemento(),
-            c.getBairro(),
-            c.getCidade(),
-            c.getUf()
+            c.getDescricao(),
+            c.getPreco(),
+            c.getQtd_Estoque(),
+            c.getFornecedores().getNome()
+                
             });
         }
                
