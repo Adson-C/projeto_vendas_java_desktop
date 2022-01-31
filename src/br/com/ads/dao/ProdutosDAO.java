@@ -40,6 +40,52 @@ public class ProdutosDAO {
             JOptionPane.showMessageDialog(null, "Erro!" + e);
         }
     }
+    
+    public void alterarProdutos(Produtos obj) {
+        try {
+
+            String sql = "update tb_produtos set descricao=?, preco=?,qtd_estoque=?,for_id=? where id=?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, obj.getDescricao());
+            ps.setDouble(2, obj.getPreco());
+            ps.setInt(3, obj.getQtd_Estoque());
+
+            ps.setInt(4, obj.getFornecedores().getId()); // obejto de fornecedores 
+            ps.setInt(5, obj.getId());
+            
+            ps.execute();
+            ps.close();
+
+            JOptionPane.showMessageDialog(null, "Produto Alterado com Sucesso!");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro!" + e);
+        }
+    }
+    
+    public void excluirProdutos(Produtos obj) {
+       
+                try {
+            // sql de para salvar novo cliente
+            String sql = "delete from tb_produtos where id = ?";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            ps.setInt(1, obj.getId());
+            
+            ps.execute();
+            ps.close();
+            
+         //JOptionPane.showMessageDialog(null, "Cliente Excluido com Sucesso! ");
+            
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Erro" + erro);
+            
+        }
+    
+        
+    }
 
     public List<Produtos> listarProdutos() {
 
