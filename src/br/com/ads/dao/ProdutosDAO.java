@@ -123,7 +123,7 @@ public class ProdutosDAO {
 
     public List<Produtos> buscaProdutosPorNome(String nome) {
 
-       try {
+        try {
 
             List<Produtos> lista = new ArrayList<>();
 
@@ -131,9 +131,9 @@ public class ProdutosDAO {
                     + " as p inner join tb_fornecedores as f on (p.for_id = f.id) where p.descricao like ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
-            
+
             ps.setString(1, nome);
-            
+
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -160,42 +160,35 @@ public class ProdutosDAO {
         }
     }
 
-    public Clientes consultarPorNome(String nome) {
+    public Produtos consultarPorNome(String nome) {
+        
         try {
-
-            String sql = "select * from tb_clientes where nome=?";
+            String sql = "select p.id, p.descricao, p.preco, p.qtd_estoque, f.nome from tb_produtos "
+                    + " as p inner join tb_fornecedores as f on (p.for_id = f.id) where p.descricao= ?";
 
             PreparedStatement ps = conn.prepareStatement(sql);
 
             ps.setString(1, nome);
 
             ResultSet rs = ps.executeQuery();
+            Produtos obj = new Produtos();
+            Fornecedores f = new Fornecedores();
 
-            Clientes obj = new Clientes();
+            if (rs.next()) {                
+                obj.setId(rs.getInt("p.id"));
+                obj.setDescricao(rs.getString("p.descricao"));
+                obj.setPreco(rs.getDouble("p.preco"));
+                obj.setQtd_Estoque(rs.getInt("p.qtd_estoque"));
 
-            if (rs.next()) {
+                f.setNome(rs.getString("f.nome"));
 
-                obj.setId(rs.getInt("id"));
-                obj.setNome(rs.getString("nome"));
-                obj.setRg(rs.getString("rg"));
-                obj.setCpf(rs.getString("cpf"));
-                obj.setEmail(rs.getString("email"));
-                obj.setTelefone(rs.getString("telefone"));
-                obj.setCelular(rs.getString("celular"));
-                obj.setCep(rs.getString("cep"));
-                obj.setEndereco(rs.getString("endereco"));
-                obj.setNumero(rs.getInt("numero"));
-                obj.setComplemento(rs.getString("complemento"));
-                obj.setBairro(rs.getString("bairro"));
-                obj.setCidade(rs.getString("cidade"));
-                obj.setUf(rs.getString("estado"));
+                obj.setFornecedores(f);
 
             }
-
             return obj;
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Produto não encontrado!");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "erro: " + e);
             return null;
         }
     }

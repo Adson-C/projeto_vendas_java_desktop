@@ -1,9 +1,7 @@
 package br.com.ads.view;
 
-import br.com.ads.dao.ClientesDAO;
 import br.com.ads.dao.FornecedoresDAO;
 import br.com.ads.dao.ProdutosDAO;
-import br.com.ads.model.Clientes;
 import br.com.ads.model.Fornecedores;
 import br.com.ads.model.Produtos;
 import br.com.ads.utils.LimparCamposUltis;
@@ -144,12 +142,17 @@ public class FrmProdutos extends javax.swing.JFrame {
 
         cbFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbFornecedor.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 cbFornecedorAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        cbFornecedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbFornecedorMouseClicked(evt);
             }
         });
         cbFornecedor.addActionListener(new java.awt.event.ActionListener() {
@@ -464,30 +467,29 @@ public class FrmProdutos extends javax.swing.JFrame {
         // buscar por Nome
 
         String nome = txtDescricao.getText();
-        Clientes obj = new Clientes();
-        ClientesDAO dao = new ClientesDAO();
+        Produtos obj = new Produtos();
+        ProdutosDAO dao = new ProdutosDAO();
 
         obj = dao.consultarPorNome(nome);
+        cbFornecedor.removeAllItems();
 
-        if (obj.getNome() != null) {
+        if (obj.getDescricao()!= null) {
 
             //Exibir Dados
             txtCodigo.setText(String.valueOf(obj.getId()));
-            txtDescricao.setText(obj.getNome());
-            txtRG.setText(obj.getRg());
-            txtCpf.setText(obj.getCpf());
-            txtEstoque.setText(obj.getEmail());
-            txtTel.setText(obj.getTelefone());
-            txtCel.setText(obj.getCelular());
-            txtCep.setText(obj.getCep());
-            txtEndereco.setText(obj.getEndereco());
-            txtNumero.setText(String.valueOf(obj.getNumero()));
-            txtComplemento.setText(obj.getComplemento());
-            txtBairro.setText(obj.getBairro());
-            txtCidade.setText(obj.getCidade());
-            cbFornecedor.setSelectedItem(obj.getUf());
+            txtDescricao.setText(obj.getDescricao());
+            txtPreco.setText(String.valueOf(obj.getPreco()));
+            txtEstoque.setText(String.valueOf(obj.getQtd_Estoque()));
+            
+            Fornecedores f = new Fornecedores();
+            FornecedoresDAO fdao = new FornecedoresDAO();
+            
+            f = fdao.consultarPorNome(obj.getFornecedores().getNome());
+            
+            cbFornecedor.getModel().setSelectedItem(f);
+            
         } else {
-            JOptionPane.showMessageDialog(null, "Cliente não encontrado!");
+            JOptionPane.showMessageDialog(null, "Produto não encontrado!");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -590,6 +592,17 @@ public class FrmProdutos extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_cbFornecedorAncestorAdded
+
+    private void cbFornecedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbFornecedorMouseClicked
+        // Carregar o Cmobobox
+        
+        FornecedoresDAO dao = new FornecedoresDAO();
+        List<Fornecedores> listadeFornecedoreses = dao.listarFornecedores();
+        cbFornecedor.removeAllItems();
+        for (Fornecedores f : listadeFornecedoreses) {
+            cbFornecedor.addItem(f);
+        }
+    }//GEN-LAST:event_cbFornecedorMouseClicked
 
     /**
      * @param args the command line arguments
