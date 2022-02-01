@@ -1,44 +1,26 @@
 package br.com.ads.view;
 
 import br.com.ads.dao.ClientesDAO;
-import br.com.ads.dao.FornecedoresDAO;
 import br.com.ads.dao.ProdutosDAO;
 import br.com.ads.model.Clientes;
-import br.com.ads.model.Fornecedores;
 import br.com.ads.model.Produtos;
-import br.com.ads.utils.LimparCamposUltis;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmVendas extends javax.swing.JFrame {
+    
+    double total, preco, subTotal;
+    int qtd;
+    
+    DefaultTableModel carrrinho;
 
-    public void listarTabela() {
-
-        ProdutosDAO dao = new ProdutosDAO();
-        List<Produtos> lista = dao.listarProdutos();
-
-        DefaultTableModel dados = (DefaultTableModel) tabelaProdutos.getModel();
-        dados.setNumRows(0);
-
-        for (Produtos c : lista) {
-            dados.addRow(new Object[]{
-                c.getId(),
-                c.getDescricao(),
-                c.getPreco(),
-                c.getQtd_Estoque(),
-                c.getFornecedores().getNome()
-
-            });
-        }
-
-    }
 
     public FrmVendas() {
         initComponents();
+        this.getContentPane().setBackground(Color.GRAY);
     }
 
     @SuppressWarnings("unchecked")
@@ -48,7 +30,7 @@ public class FrmVendas extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnPagamento = new javax.swing.JButton();
-        btmCanacelar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
@@ -114,11 +96,11 @@ public class FrmVendas extends javax.swing.JFrame {
             }
         });
 
-        btmCanacelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btmCanacelar.setText("CANCELAR VENDA");
-        btmCanacelar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCancelar.setText("CANCELAR VENDA");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btmCanacelarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -413,7 +395,7 @@ public class FrmVendas extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85)
-                .addComponent(btmCanacelar)
+                .addComponent(btnCancelar)
                 .addGap(109, 109, 109))
         );
         layout.setVerticalGroup(
@@ -433,37 +415,22 @@ public class FrmVendas extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btmCanacelar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btmCanacelar, btnPagamento});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCancelar, btnPagamento});
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btmCanacelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btmCanacelarActionPerformed
-        // Salvar
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // Cancelar
 
-        Produtos obj = new Produtos();
+        
 
-        obj.setDescricao(txtDescricao.getText());
-        obj.setPreco(Double.parseDouble(txtPreco.getText()));
-        obj.setQtd_Estoque(Integer.parseInt(txtEstoque.getText()));
-
-        // Criar um Obejto de fornecedor
-        Fornecedores f = new Fornecedores();
-        f = (Fornecedores) cbFornecedor.getSelectedItem();
-
-        obj.setFornecedores(f); // objto de Produtos
-
-        ProdutosDAO dao = new ProdutosDAO();
-
-        dao.cadastrarProdutos(obj);
-        new LimparCamposUltis().LimpaTela(painelDados);
-
-    }//GEN-LAST:event_btmCanacelarActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // Carrega a Data Atual do Sistema
@@ -525,7 +492,30 @@ public class FrmVendas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtQtdActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        // Add Item
+        
+        qtd = Integer.parseInt(txtQtd.getText());
+        preco = Double.parseDouble(txtPreco.getText());
+        
+        subTotal = qtd * preco;
+        
+        total += subTotal;
+        
+        txtTotal.setText(String.valueOf(total));
+        
+        // adicionando o produto no carrrinho
+        
+        carrrinho = (DefaultTableModel)tabelaItens.getModel();
+        
+        carrrinho.addRow(new Object[] {
+            txtCodigo.getText(),
+            txtDescricao.getText(),
+            txtQtd.getText(),
+            txtPreco.getText(),
+            subTotal
+        });
+        
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
@@ -535,7 +525,7 @@ public class FrmVendas extends javax.swing.JFrame {
     private void btnPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagamentoActionPerformed
         // Novo
 
-        new LimparCamposUltis().LimpaTela(painelDados);
+        
     }//GEN-LAST:event_btnPagamentoActionPerformed
 
     private void txtCpfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCpfKeyPressed
@@ -621,10 +611,10 @@ public class FrmVendas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btmCanacelar;
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBuscaCliente;
     private javax.swing.JButton btnBuscarProduto;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnPagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
