@@ -523,7 +523,13 @@ public class FrmVendas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTotalActionPerformed
 
     private void btnPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagamentoActionPerformed
-        // Novo
+        // Pagamento
+        
+        FrmPagamentos telap = new FrmPagamentos();
+        
+        telap.txtTotal.setText(String.valueOf(total));
+        telap.setVisible(true);
+        this.dispose();
 
         
     }//GEN-LAST:event_btnPagamentoActionPerformed
