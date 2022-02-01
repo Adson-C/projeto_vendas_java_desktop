@@ -5,11 +5,14 @@ import br.com.ads.model.Clientes;
 import br.com.ads.model.Vendas;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 
 
 public class FrmPagamentos extends javax.swing.JFrame {
     
     Clientes cliente_id = new Clientes();
+    
+    DefaultTableModel carrinho;
 
     public FrmPagamentos() {
         initComponents();
@@ -136,7 +139,7 @@ public class FrmPagamentos extends javax.swing.JFrame {
         jLabel7.setText("DINHEIRO:");
 
         txtobs.setColumns(20);
-        txtobs.setFont(new java.awt.Font("MS PGothic", 0, 14)); // NOI18N
+        txtobs.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         txtobs.setRows(5);
         jScrollPane1.setViewportView(txtobs);
 
@@ -262,6 +265,10 @@ public class FrmPagamentos extends javax.swing.JFrame {
         
         VendasDAO dao_v = new VendasDAO();
         dao_v.cadastrarVendas(objv);
+        
+        // Retorna Id da ultima Venda realizada
+        objv.setId(dao_v.retornaUltimaVenda());
+        
         
         
         
