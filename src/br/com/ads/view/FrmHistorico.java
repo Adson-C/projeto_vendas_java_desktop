@@ -6,6 +6,7 @@ import br.com.ads.model.Vendas;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -140,6 +141,11 @@ public class FrmHistorico extends javax.swing.JFrame {
                 "Código", "Data da Venda", "Cliente", "Total da Venda", "Observações"
             }
         ));
+        tabelaHistorico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaHistoricoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaHistorico);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -177,7 +183,9 @@ public class FrmHistorico extends javax.swing.JFrame {
             // buscar por venda por periodo
             //Recebe as datas
             
-            DateTimeFormatter formator = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            
+                 DateTimeFormatter formator = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate data_inicio = LocalDate.parse(txtDataInicio.getText(), formator);
             LocalDate data_fim = LocalDate.parse(txtDataFim.getText(), formator);
         
@@ -198,7 +206,26 @@ public class FrmHistorico extends javax.swing.JFrame {
                    
                });
            }
+            
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(null, "Digite duas Datas com Intervalo!");
+        }
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void tabelaHistoricoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaHistoricoMouseClicked
+        // Clicar em uma Venda
+        
+        FrmDetalhesVenda tela = new FrmDetalhesVenda();
+       
+        tela.txtClientes.setText(tabelaHistorico.getValueAt(tabelaHistorico.getSelectedRow(), 2).toString());
+        tela.txtTotalvenda.setText(tabelaHistorico.getValueAt(tabelaHistorico.getSelectedRow(), 3).toString());
+        tela.txtDataVenda.setText(tabelaHistorico.getValueAt(tabelaHistorico.getSelectedRow(), 1).toString());
+        tela.txtObsVenda.setText(tabelaHistorico.getValueAt(tabelaHistorico.getSelectedRow(), 4).toString());
+        
+       tela.setVisible(true);
+        
+    }//GEN-LAST:event_tabelaHistoricoMouseClicked
 
     /**
      * @param args the command line arguments
