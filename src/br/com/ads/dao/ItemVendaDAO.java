@@ -1,10 +1,16 @@
 package br.com.ads.dao;
 
 import br.com.ads.jdbc.ConnectionFactory;
+import br.com.ads.model.Clientes;
 import br.com.ads.model.ItemVenda;
+import br.com.ads.model.Produtos;
+import br.com.ads.model.Vendas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ItemVendaDAO {
@@ -39,4 +45,44 @@ public class ItemVendaDAO {
 
     }
 
+    // Lista Itens Vendidos de uma Venda por ID
+    public List<ItemVenda> listaItensPorVendas(int venda_id) {
+
+        try {
+
+            List<ItemVenda> lista = new ArrayList<>();
+
+            String sql = "select i.id, p.descricao, i.qtd, p.preco, i.subtotal from tb_itensvendas as i "
+                            + " inner join tb_produtos as p on(i.produto_id = p.id) where i.venda_id = ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            ps.setInt(1, venda_id);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                
+                ItemVenda iTem = new ItemVenda();
+                Produtos prod = new Produtos();
+                
+                iTem.setId(rs.getInt("i.id"));
+                prod.setDescricao(rs.getString("p.descricao"));
+                iTem.setQtd(rs.getInt("i.qtd"));
+                prod.setPreco(rs.getDouble("p.preco"));
+                iTem.setSubTotal(rs.getDouble("i.subtotal"));
+                
+                iTem.setProduto(prod);
+
+                lista.add(iTem);
+            }
+
+            return lista;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "erro: " + e);
+            return null;
+        }
+    }
+    
 }
