@@ -1,10 +1,8 @@
 package br.com.ads.dao;
 
 import br.com.ads.jdbc.ConnectionFactory;
-import br.com.ads.model.Clientes;
 import br.com.ads.model.ItemVenda;
 import br.com.ads.model.Produtos;
-import br.com.ads.model.Vendas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

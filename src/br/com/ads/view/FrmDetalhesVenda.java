@@ -163,7 +163,7 @@ public class FrmDetalhesVenda extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Produto", "Qtd Comptada", "Valor", "SubTotal"
+                "Produto", "Qtd Comprada", "Valor", "SubTotal"
             }
         ));
         jScrollPane1.setViewportView(tabelaItemVendido);
@@ -249,7 +249,7 @@ public class FrmDetalhesVenda extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tabelaItemVendido;
+    public javax.swing.JTable tabelaItemVendido;
     public javax.swing.JTextField txtClientes;
     public javax.swing.JTextField txtDataVenda;
     public javax.swing.JTextArea txtObsVenda;

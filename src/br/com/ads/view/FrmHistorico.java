@@ -1,7 +1,8 @@
-
 package br.com.ads.view;
 
+import br.com.ads.dao.ItemVendaDAO;
 import br.com.ads.dao.VendasDAO;
+import br.com.ads.model.ItemVenda;
 import br.com.ads.model.Vendas;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,10 +10,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class FrmHistorico extends javax.swing.JFrame {
 
-    
     public FrmHistorico() {
         initComponents();
     }
@@ -172,7 +171,7 @@ public class FrmHistorico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtDataInicioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataInicioKeyPressed
-        
+
     }//GEN-LAST:event_txtDataInicioKeyPressed
 
     private void txtDataFimKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDataFimKeyPressed
@@ -180,51 +179,73 @@ public class FrmHistorico extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDataFimKeyPressed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
-            // buscar por venda por periodo
-            //Recebe as datas
-            
+        // buscar por venda por periodo
+        //Recebe as datas
+
         try {
-            
-                 DateTimeFormatter formator = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            DateTimeFormatter formator = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate data_inicio = LocalDate.parse(txtDataInicio.getText(), formator);
             LocalDate data_fim = LocalDate.parse(txtDataFim.getText(), formator);
-        
-           VendasDAO dao = new VendasDAO();
 
-           List<Vendas> lista = dao.listaVendasPorPeriodo(data_inicio, data_fim);
-           
-           DefaultTableModel dados = (DefaultTableModel)tabelaHistorico.getModel();
-           dados.setNumRows(0);
-           
-           for (Vendas v : lista) {
-               dados.addRow(new Object[]{
-                   v.getId(),
-                   v.getData_venda(),
-                   v.getCliente().getNome(),
-                   v.getTotal_venda(),
-                   v.getObs()
-                   
-               });
-           }
-            
+            VendasDAO dao = new VendasDAO();
+
+            List<Vendas> lista = dao.listaVendasPorPeriodo(data_inicio, data_fim);
+
+            DefaultTableModel dados = (DefaultTableModel) tabelaHistorico.getModel();
+            dados.setNumRows(0);
+
+            for (Vendas v : lista) {
+                dados.addRow(new Object[]{
+                    v.getId(),
+                    v.getData_venda(),
+                    v.getCliente().getNome(),
+                    v.getTotal_venda(),
+                    v.getObs()
+
+                });
+            }
+
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(null, "Digite duas Datas com Intervalo!");
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void tabelaHistoricoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaHistoricoMouseClicked
         // Clicar em uma Venda
-        
+
         FrmDetalhesVenda tela = new FrmDetalhesVenda();
-       
+
         tela.txtClientes.setText(tabelaHistorico.getValueAt(tabelaHistorico.getSelectedRow(), 2).toString());
         tela.txtTotalvenda.setText(tabelaHistorico.getValueAt(tabelaHistorico.getSelectedRow(), 3).toString());
         tela.txtDataVenda.setText(tabelaHistorico.getValueAt(tabelaHistorico.getSelectedRow(), 1).toString());
         tela.txtObsVenda.setText(tabelaHistorico.getValueAt(tabelaHistorico.getSelectedRow(), 4).toString());
-        
-       tela.setVisible(true);
-        
+
+        // pega o id
+        int venda_id = Integer.parseInt(tabelaHistorico.getValueAt(tabelaHistorico.getSelectedRow(), 0).toString());
+
+        // Dados dos Itens comprados
+        ItemVenda item = new ItemVenda();
+        ItemVendaDAO dao_item = new ItemVendaDAO();
+
+        List<ItemVenda> listaItens = dao_item.listaItensPorVendas(venda_id);
+
+        DefaultTableModel dados = (DefaultTableModel) tela.tabelaItemVendido.getModel();
+        dados.setNumRows(0);
+
+        for (ItemVenda i : listaItens) {
+            dados.addRow(new Object[]{
+                i.getProduto().getDescricao(),
+                i.getQtd(),
+                i.getProduto().getPreco(),
+                i.getSubTotal()
+
+            });
+        }
+
+        tela.setVisible(true);
+
     }//GEN-LAST:event_tabelaHistoricoMouseClicked
 
     /**
