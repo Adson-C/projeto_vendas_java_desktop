@@ -265,7 +265,7 @@ public class ProdutosDAO {
                 
                 qtd_estoque = (rs.getInt("qtd_estoque"));
             }
-            return  qtd_estoque;
+            return qtd_estoque;
             
         } catch (SQLException e) {
             throw new RuntimeException(e);

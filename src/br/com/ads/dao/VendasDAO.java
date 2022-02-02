@@ -2,11 +2,14 @@
 package br.com.ads.dao;
 
 import br.com.ads.jdbc.ConnectionFactory;
+import br.com.ads.model.Clientes;
 import br.com.ads.model.Vendas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 
@@ -65,6 +68,46 @@ public class VendasDAO {
             
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    
+    // Filtrar por Datas
+    public List<Vendas> listaVendasPorPeriodo(String data_inicio,String data_fim) {
+
+        try {
+
+            List<Vendas> lista = new ArrayList<>();
+
+            String sql = "select v.id, v.data_venda, c.nome, v.total_venda, v.observacoes from tb_vendas as v "
+                            + "inner join tb_clientes as c on(v.cliente_id = c.id) where v.data_venda between ? and ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            ps.setString(1, data_inicio);
+            ps.setString(2, data_fim);
+            
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Vendas obj = new Vendas();
+                Clientes c = new Clientes();
+
+                obj.setId(rs.getInt("v.id"));
+                obj.setData_venda(rs.getString("v.data_venda"));
+                c.setNome(rs.getString("c.nome"));
+                obj.setTotal_venda(rs.getDouble("v.total_venda"));
+                obj.setObs(rs.getString("v.observacoes"));
+
+                obj.setCliente(c);
+
+                lista.add(obj);
+            }
+
+            return lista;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "erro: " + e);
+            return null;
         }
     }
     
