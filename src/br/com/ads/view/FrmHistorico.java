@@ -1,6 +1,13 @@
 
 package br.com.ads.view;
 
+import br.com.ads.dao.VendasDAO;
+import br.com.ads.model.Vendas;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 
 public class FrmHistorico extends javax.swing.JFrame {
 
@@ -42,10 +49,10 @@ public class FrmHistorico extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(235, 235, 235))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,8 +174,30 @@ public class FrmHistorico extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDataFimKeyPressed
 
     private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+            // buscar por venda por periodo
+            //Recebe as datas
+            
+            DateTimeFormatter formator = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate data_inicio = LocalDate.parse(txtDataInicio.getText(), formator);
+            LocalDate data_fim = LocalDate.parse(txtDataFim.getText(), formator);
+        
+           VendasDAO dao = new VendasDAO();
 
-
+           List<Vendas> lista = dao.listaVendasPorPeriodo(data_inicio, data_fim);
+           
+           DefaultTableModel dados = (DefaultTableModel)tabelaHistorico.getModel();
+           dados.setNumRows(0);
+           
+           for (Vendas v : lista) {
+               dados.addRow(new Object[]{
+                   v.getId(),
+                   v.getData_venda(),
+                   v.getCliente().getNome(),
+                   v.getTotal_venda(),
+                   v.getObs()
+                   
+               });
+           }
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**

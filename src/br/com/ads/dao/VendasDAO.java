@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -72,7 +73,7 @@ public class VendasDAO {
     }
     
     // Filtrar por Datas
-    public List<Vendas> listaVendasPorPeriodo(String data_inicio,String data_fim) {
+    public List<Vendas> listaVendasPorPeriodo(LocalDate data_inicio,LocalDate data_fim) {
 
         try {
 
@@ -83,8 +84,8 @@ public class VendasDAO {
 
             PreparedStatement ps = conn.prepareStatement(sql);
             
-            ps.setString(1, data_inicio);
-            ps.setString(2, data_fim);
+            ps.setString(1, data_inicio.toString());
+            ps.setString(2, data_fim.toString());
             
             ResultSet rs = ps.executeQuery();
 
