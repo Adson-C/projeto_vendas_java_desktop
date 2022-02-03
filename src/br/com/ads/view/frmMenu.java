@@ -115,6 +115,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/clientes-controle.png"))); // NOI18N
         jMenuItem1.setText("Controle de Clientes");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
@@ -123,6 +128,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu2.setText("Fucionários");
 
         menu_funcionario.setText("Controle de Funcionários");
+        menu_funcionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_funcionarioActionPerformed(evt);
+            }
+        });
         jMenu2.add(menu_funcionario);
 
         jMenuBar1.add(jMenu2);
@@ -131,6 +141,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu3.setText("Fornecedores");
 
         jMenuItem3.setText("Controle de Fornecedores");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem3);
 
         jMenuBar1.add(jMenu3);
@@ -142,6 +157,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu6.add(jMenuItem4);
 
         jMenuItem5.setText("Consulta de Produtos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem5);
 
         jMenuBar1.add(jMenu6);
@@ -150,12 +170,27 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu7.setText("Vendas");
 
         jMenuItem6.setText("Abrir Ponto de Vendas");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu7.add(jMenuItem6);
 
         menu_posicao.setText("Posição do Dia");
+        menu_posicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_posicaoActionPerformed(evt);
+            }
+        });
         jMenu7.add(menu_posicao);
 
         menu_controlesvendas.setText("Controle de vendas");
+        menu_controlesvendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_controlesvendasActionPerformed(evt);
+            }
+        });
         jMenu7.add(menu_controlesvendas);
 
         jMenuBar1.add(jMenu7);
@@ -230,6 +265,62 @@ public class frmMenu extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jMenu9MouseClicked
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // Consulta Produtos
+        FrmProdutos tela = new FrmProdutos();
+        tela.tabbeDados.setSelectedIndex(1);
+        tela.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // Clientes
+        
+        FrmClientes tela = new FrmClientes();
+        tela.tabbeDados.setSelectedIndex(0);
+        tela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void menu_funcionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_funcionarioActionPerformed
+        // funcionarios
+        
+        FrmFuncionarios tela = new FrmFuncionarios();
+        tela.tabbeDados.setSelectedIndex(0);
+        tela.setVisible(true);
+    }//GEN-LAST:event_menu_funcionarioActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // Fornecedores
+        
+        FrmFornecedores tela = new FrmFornecedores();
+        tela.tabbeDados.setSelectedIndex(0);
+        tela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // ponto de Vendas
+        
+        FrmVendas tela = new FrmVendas();
+        tela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void menu_posicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_posicaoActionPerformed
+        // Posicao do dia
+        
+        FrmTotalVenda tela = new FrmTotalVenda();
+        
+        tela.setVisible(true);
+    }//GEN-LAST:event_menu_posicaoActionPerformed
+
+    private void menu_controlesvendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_controlesvendasActionPerformed
+        // Historico
+        
+        FrmHistorico tela = new FrmHistorico();
+        
+        tela.setVisible(true);
+        
+    }//GEN-LAST:event_menu_controlesvendasActionPerformed
 
     /**
      * @param args the command line arguments
