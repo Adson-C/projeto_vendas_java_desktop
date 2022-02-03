@@ -273,4 +273,22 @@ public class ProdutosDAO {
         }
         
     }
+    public void adiconarEstouqe(int id, int qtd_nova) {
+        
+        try {
+            String sql = "update tb_produtos set qtd_estoque =? where id=?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            ps.setInt(1, qtd_nova);
+            ps.setInt(2, id);
+            
+            ps.execute();
+            ps.close();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Erro: " + e);
+            
+        }
+    }  
 }

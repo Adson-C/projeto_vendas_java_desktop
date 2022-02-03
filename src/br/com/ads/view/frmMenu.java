@@ -154,6 +154,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu6.setText("Produtos");
 
         jMenuItem4.setText("Controle de Estoque");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem4);
 
         jMenuItem5.setText("Consulta de Produtos");
@@ -321,6 +326,14 @@ public class frmMenu extends javax.swing.JFrame {
         tela.setVisible(true);
         
     }//GEN-LAST:event_menu_controlesvendasActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // Controle Estoque
+        
+        FrmEstoque tela = new FrmEstoque();
+        
+        tela.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments

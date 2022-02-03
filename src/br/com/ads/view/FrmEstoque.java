@@ -3,9 +3,12 @@ package br.com.ads.view;
 import br.com.ads.dao.ProdutosDAO;
 import br.com.ads.model.Produtos;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmEstoque extends javax.swing.JFrame {
+    
+    int idproduto, qtd_nova;
 
     public void listarTabela() {
 
@@ -46,7 +49,7 @@ public class FrmEstoque extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtTotalvenda = new javax.swing.JTextField();
+        txtqtd = new javax.swing.JTextField();
         txtEstoAtual = new javax.swing.JTextField();
         txtDescri = new javax.swing.JTextField();
         btnPesquisarDes = new javax.swing.JButton();
@@ -97,10 +100,10 @@ public class FrmEstoque extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Qtd:");
 
-        txtTotalvenda.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtTotalvenda.addActionListener(new java.awt.event.ActionListener() {
+        txtqtd.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtqtd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTotalvendaActionPerformed(evt);
+                txtqtdActionPerformed(evt);
             }
         });
 
@@ -151,7 +154,7 @@ public class FrmEstoque extends javax.swing.JFrame {
                         .addGap(55, 55, 55)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTotalvenda))
+                        .addComponent(txtqtd))
                     .addComponent(txtDescri, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -172,7 +175,7 @@ public class FrmEstoque extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(txtEstoAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(txtTotalvenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtqtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdd))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
@@ -233,9 +236,9 @@ public class FrmEstoque extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTotalvendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalvendaActionPerformed
+    private void txtqtdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtqtdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTotalvendaActionPerformed
+    }//GEN-LAST:event_txtqtdActionPerformed
 
     private void txtEstoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstoAtualActionPerformed
         // TODO add your handling code here:
@@ -271,7 +274,27 @@ public class FrmEstoque extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisarDesActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
+        // Add estoque
+        try {
+            int qtd_Estoque, qtd;
+            
+            qtd_Estoque = Integer.parseInt(txtEstoAtual.getText());
+            
+           qtd = Integer.parseInt(txtqtd.getText());
+           
+           qtd_nova = qtd_Estoque + qtd;
+           
+           ProdutosDAO dao = new ProdutosDAO();
+           dao.adiconarEstouqe(idproduto, qtd_nova);
+            
+            JOptionPane.showMessageDialog(null, "Estoque do produto Atualizado!");
+            
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(null, "Selecione o produto ou informe o nova qtd! " + e);
+            
+        }
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
@@ -282,6 +305,8 @@ public class FrmEstoque extends javax.swing.JFrame {
 
     private void tabelaListaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaListaProdutosMouseClicked
         // Pega os Estoque Atual
+        idproduto = Integer.parseInt(tabelaListaProdutos.getValueAt(tabelaListaProdutos.getSelectedRow(), 0).toString());
+        txtDescri.setText(tabelaListaProdutos.getValueAt(tabelaListaProdutos.getSelectedRow(), 1).toString());
         txtEstoAtual.setText(tabelaListaProdutos.getValueAt(tabelaListaProdutos.getSelectedRow(), 3).toString());
         
     }//GEN-LAST:event_tabelaListaProdutosMouseClicked
@@ -338,6 +363,6 @@ public class FrmEstoque extends javax.swing.JFrame {
     public javax.swing.JTable tabelaListaProdutos;
     public javax.swing.JTextField txtDescri;
     public javax.swing.JTextField txtEstoAtual;
-    public javax.swing.JTextField txtTotalvenda;
+    public javax.swing.JTextField txtqtd;
     // End of variables declaration//GEN-END:variables
 }
