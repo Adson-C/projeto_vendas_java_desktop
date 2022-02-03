@@ -45,7 +45,7 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menu_funcionario = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
@@ -53,8 +53,8 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        menu_posicao = new javax.swing.JMenuItem();
+        menu_controlesvendas = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu9 = new javax.swing.JMenu();
@@ -121,8 +121,8 @@ public class frmMenu extends javax.swing.JFrame {
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/funcionarios.png"))); // NOI18N
         jMenu2.setText("Fucionários");
 
-        jMenuItem2.setText("Controle de Funcionários");
-        jMenu2.add(jMenuItem2);
+        menu_funcionario.setText("Controle de Funcionários");
+        jMenu2.add(menu_funcionario);
 
         jMenuBar1.add(jMenu2);
 
@@ -151,11 +151,11 @@ public class frmMenu extends javax.swing.JFrame {
         jMenuItem6.setText("Abrir Ponto de Vendas");
         jMenu7.add(jMenuItem6);
 
-        jMenuItem7.setText("Posição do Dia");
-        jMenu7.add(jMenuItem7);
+        menu_posicao.setText("Posição do Dia");
+        jMenu7.add(menu_posicao);
 
-        jMenuItem8.setText("Histórico de Vendas");
-        jMenu7.add(jMenuItem8);
+        menu_controlesvendas.setText("Controle de vendas");
+        jMenu7.add(menu_controlesvendas);
 
         jMenuBar1.add(jMenu7);
 
@@ -243,16 +243,16 @@ public class frmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbUsuario;
+    public javax.swing.JMenuItem menu_controlesvendas;
+    public javax.swing.JMenuItem menu_funcionario;
+    public javax.swing.JMenuItem menu_posicao;
     private javax.swing.JDesktopPane painelDesktop;
     // End of variables declaration//GEN-END:variables
 }

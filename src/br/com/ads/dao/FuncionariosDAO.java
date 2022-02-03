@@ -264,10 +264,30 @@ public class FuncionariosDAO {
             ResultSet rs = ps.executeQuery();
             
             if(rs.next()) {
-               JOptionPane.showMessageDialog(null, "Seja bem vindo ao Sistema!");
-                frmMenu tela = new frmMenu();
-                tela.usuarioLogado = rs.getString("nome");
-                tela.setVisible(true);
+                // usuario logou]
+                
+                // Caso o usario seja tipo ADMim
+                if(rs.getString("nivel_acesso").equals("Admin")) {
+                    
+                    JOptionPane.showMessageDialog(null, "Seja bem vindo ao Sistema!");
+                    frmMenu tela = new frmMenu();
+                    tela.usuarioLogado = rs.getString("nome");
+                    tela.setVisible(true);
+                    
+                 // caso seja Usuario   
+                }else if (rs.getString("nivel_acesso").equals("Usuário")) {
+                    JOptionPane.showMessageDialog(null, "Seja bem vindo ao Sistema!");
+                    frmMenu tela = new frmMenu();
+                    tela.usuarioLogado = rs.getString("nome");
+                    
+                    // Desabilatar os Menus
+                    tela.menu_posicao.setEnabled(false);
+                    tela.menu_controlesvendas.setVisible(false);
+                    tela.menu_funcionario.setEnabled(false);
+                    
+                    tela.setVisible(true);
+                    
+                }
                 
             }else {
                JOptionPane.showMessageDialog(null, "Dados incorretos!");
