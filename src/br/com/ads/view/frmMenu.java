@@ -8,6 +8,7 @@ package br.com.ads.view;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -82,7 +83,7 @@ public class frmMenu extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbUsuario)
-                .addContainerGap(660, Short.MAX_VALUE))
+                .addContainerGap(640, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,12 +165,22 @@ public class frmMenu extends javax.swing.JFrame {
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/usuario-tro.png"))); // NOI18N
         jMenuItem9.setText("Trocar de Usuário");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jMenuItem9);
 
         jMenuBar1.add(jMenu8);
 
         jMenu9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/sair.png"))); // NOI18N
         jMenu9.setText("Sair");
+        jMenu9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu9MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu9);
 
         setJMenuBar(jMenuBar1);
@@ -196,6 +207,29 @@ public class frmMenu extends javax.swing.JFrame {
         lbUsuario.setText(usuarioLogado);
         this.setVisible(true);
     }//GEN-LAST:event_formWindowActivated
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // Efetuar Logout
+        
+        frmLogin telalogin = new frmLogin();
+        
+        this.dispose();
+        
+        telalogin.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenu9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu9MouseClicked
+        // Sair 
+        
+        int op;
+        
+        op = JOptionPane.showConfirmDialog(null, "Você tem Certeza que deseja Sair!");
+        if(op == 0) {
+            System.exit(0);
+            
+        }
+    }//GEN-LAST:event_jMenu9MouseClicked
 
     /**
      * @param args the command line arguments
